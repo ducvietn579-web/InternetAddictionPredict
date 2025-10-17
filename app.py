@@ -11,15 +11,6 @@ except Exception as e:
     st.error(f"❌ Không thể load mô hình: {e}")
     GD_model, encoder = None, None
 
-cols = [
-    "Gender",
-    "Academic_Level",
-    "Sleep_Hours_Per_Night",
-    "Relationship_Status",
-    "Mental_Health_Score",
-    "Most_Used_Platform",
-    "Avg_Daily_Usage_Hours"
-]
 
 # --- Mapping cho dữ liệu dạng chữ ---
 gender_map = {"Male": 0, "Female": 1}
@@ -62,7 +53,16 @@ def main():
                     "Mental_Health_Score": mental_health,
                     "Most_Used_Platform": platform_map[platform],
                     "Avg_Daily_Usage_Hours": usage_hours
-                }
+                    }
+                    cols = [
+                    "Gender",
+                    "Academic_Level",
+                    "Sleep_Hours_Per_Night",
+                    "Relationship_Status",
+                    "Mental_Health_Score",
+                    "Most_Used_Platform",
+                    "Avg_Daily_Usage_Hours"
+                   ]
 
                 X = pd.DataFrame([data], columns = cols)
                 X_encoded = encoder.transform(X)
