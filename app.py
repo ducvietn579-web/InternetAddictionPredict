@@ -54,9 +54,9 @@ def predict():
         return render_template('index.html', result={
             "score": round(prediction, 2),
             "level": level
+    except Exception as e: 
+    return render_template('iindex.html', error=str(e))
         })
-except Exception as e: 
-return render_template('iindex.html', error=str(e))
 
 if __name__ == '__main__':
     app.run(debug=False)
