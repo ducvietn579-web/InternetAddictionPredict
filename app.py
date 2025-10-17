@@ -6,13 +6,12 @@ import pandas as pd
 app = Flask(__name__)
 
 # --- Load mô hình Machine Learning ---
-model = rfmodel_enc.rpk
-model.load_model("rfmodel_enc.rpk")
+GD_model, encoder = joblib.load("GDmodel_enc.rpk")
 
 # --- Mapping cho dữ liệu dạng chữ ---
-gender_map = {"Male": 0, "Female": 1, "Other": 2}
-academic_map = {"Undergraduate": 0, "Graduated": 1, "Highschool": 2, "Other": 3}
-relationship_map = {"Single": 0, "In a relationship": 1, "Married": 2, "Other": 3}
+gender_map = {"Male": 0, "Female": 1}
+academic_map = {"Undergraduate": 0, "Graduated": 1, "Highschool": 2}
+relationship_map = {"Single": 0, "In a relationship": 1, "Complicated": 3}
 platform_map = {"Youtube": 0, "Facebook": 1, "TikTok": 2, "Instagram": 3, "Other": 4}
 
 @app.route('/')
@@ -37,7 +36,9 @@ def predict():
         X = pd.DataFrame([data])
 
         # --- Dự đoán ---
-        prediction = model.predict(X)[0]
+        X_encoded = encoder.transform(X)
+        
+        prediction = GD_model.predict(X_encoded)[0]
 
         # --- Xếp loại mức độ ---
         if prediction < 4:
