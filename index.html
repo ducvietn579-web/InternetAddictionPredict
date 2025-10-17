@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dự đoán điểm nghiện Internet</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 720px; margin: 24px auto; padding: 12px; }
+    label { display:block; margin-top:10px; }
+    input, select { width:100%; padding:8px; }
+    button { margin-top:12px; padding:10px 14px; cursor:pointer; background:#007bff; color:white; border:none; border-radius:4px; }
+    button:hover { background:#0056b3; }
+    .result { background:#f5f5f5; padding:10px; margin-top:20px; border-radius:8px; }
+  </style>
+</head>
+<body>
+  <h2>Dự đoán điểm nghiện Internet</h2>
+  <form action="/predict" method="post">
+    <label>Giới tính:</label>
+    <select name="Gender">
+      <option>Male</option><option>Female</option><option>Other</option>
+    </select>
+
+    <label>Trình độ học vấn:</label>
+    <select name="Academic_Level">
+      <option>Undergraduate</option><option>Graduated</option><option>Highschool</option><option>Other</option>
+    </select>
+
+    <label>Giờ ngủ mỗi đêm:</label>
+    <input type="number" name="Sleep_Hours_Per_Night" step="0.1" value="7">
+
+    <label>Tình trạng quan hệ:</label>
+    <select name="Relationship_Status">
+      <option>Single</option><option>In a relationship</option><option>Married</option><option>Other</option>
+    </select>
+
+    <label>Điểm sức khỏe tâm thần:</label>
+    <input type="number" name="Mental_Health_Score" min="0" max="10" value="5">
+
+    <label>Nền tảng sử dụng nhiều nhất:</label>
+    <select name="Most_Used_Platform">
+      <option>Youtube</option><option>Facebook</option><option>TikTok</option><option>Instagram</option><option>Other</option>
+    </select>
+
+    <label>Giờ sử dụng trung bình mỗi ngày:</label>
+    <input type="number" name="Avg_Daily_Usage_Hours" step="0.1" value="3">
+
+    <button type="submit">Dự đoán</button>
+  </form>
+
+  {% if result %}
+  <div class="result">
+    <h3>Kết quả dự đoán</h3>
+    <p><b>Điểm nghiện:</b> {{ result.score }}</p>
+    <p><b>Mức độ:</b> {{ result.level }}</p>
+  </div>
+  {% elif error %}
+  <div class="result">
+    <h3 style="color:red;">Lỗi:</h3>
+    <p>{{ error }}</p>
+  </div>
+  {% endif %}
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dự đoán điểm nghiện Internet</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 720px; margin: 24px auto; padding: 12px; }
+    label { display:block; margin-top:10px; }
+    input, select { width:100%; padding:8px; }
+    button { margin-top:12px; padding:10px 14px; cursor:pointer; background:#007bff; color:white; border:none; border-radius:4px; }
+    button:hover { background:#0056b3; }
+    .result { background:#f5f5f5; padding:10px; margin-top:20px; border-radius:8px; }
+  </style>
+</head>
+<body>
+  <h2>Dự đoán điểm nghiện Internet</h2>
+  <form action="/predict" method="post">
+    <label>Giới tính:</label>
+    <select name="Gender">
+      <option>Male</option><option>Female</option><option>Other</option>
+    </select>
+
+    <label>Trình độ học vấn:</label>
+    <select name="Academic_Level">
+      <option>Undergraduate</option><option>Graduated</option><option>Highschool</option><option>Other</option>
+    </select>
+
+    <label>Giờ ngủ mỗi đêm:</label>
+    <input type="number" name="Sleep_Hours_Per_Night" step="0.1" value="7">
+
+    <label>Tình trạng quan hệ:</label>
+    <select name="Relationship_Status">
+      <option>Single</option><option>In a relationship</option><option>Married</option><option>Other</option>
+    </select>
+
+    <label>Điểm sức khỏe tâm thần:</label>
+    <input type="number" name="Mental_Health_Score" min="0" max="10" value="5">
+
+    <label>Nền tảng sử dụng nhiều nhất:</label>
+    <select name="Most_Used_Platform">
+      <option>Youtube</option><option>Facebook</option><option>TikTok</option><option>Instagram</option><option>Other</option>
+    </select>
+
+    <label>Giờ sử dụng trung bình mỗi ngày:</label>
+    <input type="number" name="Avg_Daily_Usage_Hours" step="0.1" value="3">
+
+    <button type="submit">Dự đoán</button>
+  </form>
+
+  {% if result %}
+  <div class="result">
+    <h3>Kết quả dự đoán</h3>
+    <p><b>Điểm nghiện:</b> {{ result.score }}</p>
+    <p><b>Mức độ:</b> {{ result.level }}</p>
+  </div>
+  {% elif error %}
+  <div class="result">
+    <h3 style="color:red;">Lỗi:</h3>
+    <p>{{ error }}</p>
+  </div>
+  {% endif %}
+</body>
+</html>
