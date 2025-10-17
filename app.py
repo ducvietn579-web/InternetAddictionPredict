@@ -6,7 +6,7 @@ import pandas as pd
 app = Flask(__name__)
 
 # --- Load mô hình Machine Learning ---
-model = rf_model
+model = rfmodel_enc.rpk
 model.load_model("rfmodel_enc.rpk")
 
 # --- Mapping cho dữ liệu dạng chữ ---
