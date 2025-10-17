@@ -7,7 +7,7 @@ st.title("Dự đoán Mức độ Nghiện Internet")
 
 # Tải mô hình đã huấn luyện
 with open("GDmodel_enc.rpk", "rb") as f:
-    model = pickle.load(f) 
+    model = pickle.load(GDmodel_enc.rpk) 
 # Giao diện nhập liệu
 st.header("Nhập thông tin người dùng:")
 
