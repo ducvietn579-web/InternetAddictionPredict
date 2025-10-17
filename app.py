@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # --- Load mô hình Machine Learning ---
 model = xgb.XGBRegressor()
-model.load_model("xgb_model.json")
+model.load_model("XGmodel_enc.json")
 
 # --- Mapping cho dữ liệu dạng chữ ---
 gender_map = {"Male": 0, "Female": 1, "Other": 2}
