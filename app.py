@@ -36,7 +36,7 @@ def predict():
         }
    
         # --- Chuyển dữ liệu thành DataFrame cho mô hình ---
-        X = pd.DataFrame([data])
+        X = pd.transform([data])
     
         # --- Dự đoán ---
         X_encoded = encoder.transform(X)
