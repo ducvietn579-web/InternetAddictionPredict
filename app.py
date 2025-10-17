@@ -1,23 +1,62 @@
-    import streamlit as st
+import streamlit as st
+import xgboost as xgb
 import numpy as np
+import pandas as pd
 import joblib
-# Tiêu đề trang
-st.title("Dự đoán Mức độ Nghiện Internet")
 
-# Tải mô hình đã huấn luyện
-model = joblib.load('GDmodel_enc.rpk')
 
-# Giao diện nhập liệu
-st.header("Nhập thông tin người dùng:")
+# --- Load mô hình Machine Learning ---
+GD_model, encoder = joblib.load("GDmodel_enc.rpk")
 
-age = st.number_input("Tuổi", min_value=10, max_value=80, value=20)
-study_time = st.number_input("Thời gian học mỗi ngày (giờ)", min_value=0.0, max_value=12.0, value=2.0)
-online_time = st.number_input("Thời gian sử dụng Internet mỗi ngày (giờ)", min_value=0.0, max_value=24.0, value=5.0)
-social_media = st.number_input("Thời gian dùng mạng xã hội mỗi ngày (giờ)", min_value=0.0, max_value=24.0, value=3.0)
-sleep_time = st.number_input("Thời gian ngủ (giờ/ngày)", min_value=0.0, max_value=24.0, value=7.0)
+# --- Mapping cho dữ liệu dạng chữ ---
+gender_map = {"Male": 0, "Female": 1}
+academic_map = {"Undergraduate": 0, "Graduated": 1, "Highschool": 2}
+relationship_map = {"Single": 0, "In a relationship": 1, "Complicated": 3}
+platform_map = {"Youtube": 0, "Facebook": 1, "TikTok": 2, "Instagram": 3, "Other": 4}
 
-# Nút dự đoán
-if st.button("Dự đoán"):
-    input_data = np.array([[age, study_time, online_time, social_media, sleep_time]])
-    result = model.predict(input_data)
-    st.success(f"Điểm dự đoán nghiện Internet: {result[0]:.2f}")
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('index.html')
+
+@app.route('/predict', methods=['GET','POST'])
+def predict():
+    if request.method == 'GET':
+        return render_templates('index.html')
+    try:
+        # --- Lấy dữ liệu từ form ---
+        data = {
+            "Gender": gender_map[request.form["Gender"]],
+            "Academic_Level": academic_map[request.form["Academic_Level"]],
+            "Sleep_Hours_Per_Night": float(request.form["Sleep_Hours_Per_Night"]),
+            "Relationship_Status": relationship_map[request.form["Relationship_Status"]],
+            "Mental_Health_Score": float(request.form["Mental_Health_Score"]),
+            "Most_Used_Platform": platform_map[request.form["Most_Used_Platform"]],
+            "Avg_Daily_Usage_Hours": float(request.form["Avg_Daily_Usage_Hours"])
+        }
+   
+        # --- Chuyển dữ liệu thành DataFrame cho mô hình ---
+        X = pd.transform([data])
+    
+        # --- Dự đoán ---
+        X_encoded = encoder.transform(X)
+        
+        prediction = GD_model.predict(X_encoded)[0]
+
+        # --- Xếp loại mức độ ---
+        if prediction < 4:
+            level = "Thấp"
+        elif prediction < 7:
+            level = "Trung bình"
+        else:
+            level = "Cao"
+    
+        return render_template('index.html', result={
+            "score": round(prediction, 2),
+            "level": level
+    
+        })
+    
+    except Exception as e: 
+        return render_template('index.html', error=str(e))
+if __name__ == '__main__':
+    app.run(debug=False)
