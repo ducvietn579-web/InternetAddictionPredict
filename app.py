@@ -4,60 +4,75 @@ import numpy as np
 import pandas as pd
 import joblib
 
-
 # --- Load mô hình Machine Learning ---
-GD_model, encoder = joblib.load("GDmodel_enc.rpk")
+try:
+    GD_model, encoder = joblib.load("GDmodel_enc.rpk")
+except Exception as e:
+    st.error(f"❌ Không thể load mô hình: {e}")
+    GD_model, encoder = None, None
 
 # --- Mapping cho dữ liệu dạng chữ ---
 gender_map = {"Male": 0, "Female": 1}
 academic_map = {"Undergraduate": 0, "Graduated": 1, "Highschool": 2}
-relationship_map = {"Single": 0, "In a relationship": 1, "Complicated": 3}
+relationship_map = {"Single": 0, "In a relationship": 1, "Complicated": 2}
 platform_map = {"Youtube": 0, "Facebook": 1, "TikTok": 2, "Instagram": 3, "Other": 4}
 
+# --- Giao diện chính ---
 def main():
-    st.title("Internet Addiction Prediction")
-    st.write("Welcome to the prediction app!")
-def home():
-    return render_template('index.html')
+    st.title("🧠 Internet Addiction Prediction")
+    st.write("Nhập thông tin bên dưới để dự đoán mức độ nghiện Internet:")
 
-def predict():
-    if request.method == 'GET':
-        return render_templates('index.html')
-    try:
-        # --- Lấy dữ liệu từ form ---
-        data = {
-            "Gender": gender_map[request.form["Gender"]],
-            "Academic_Level": academic_map[request.form["Academic_Level"]],
-            "Sleep_Hours_Per_Night": float(request.form["Sleep_Hours_Per_Night"]),
-            "Relationship_Status": relationship_map[request.form["Relationship_Status"]],
-            "Mental_Health_Score": float(request.form["Mental_Health_Score"]),
-            "Most_Used_Platform": platform_map[request.form["Most_Used_Platform"]],
-            "Avg_Daily_Usage_Hours": float(request.form["Avg_Daily_Usage_Hours"])
-        }
-   
-        # --- Chuyển dữ liệu thành DataFrame cho mô hình ---
-        X = pd.transform([data])
-    
-        # --- Dự đoán ---
-        X_encoded = encoder.transform(X)
-        
-        prediction = GD_model.predict(X_encoded)[0]
+    # --- Tạo form nhập dữ liệu ---
+    with st.form("prediction_form"):
+        col1, col2 = st.columns(2)
+        with col1:
+            gender = st.selectbox("Giới tính", list(gender_map.keys()))
+            academic = st.selectbox("Trình độ học vấn", list(academic_map.keys()))
+            relationship = st.selectbox("Tình trạng mối quan hệ", list(relationship_map.keys()))
+            platform = st.selectbox("Nền tảng sử dụng nhiều nhất", list(platform_map.keys()))
+        with col2:
+            sleep_hours = st.number_input("Số giờ ngủ mỗi đêm", min_value=0.0, max_value=12.0, value=7.0)
+            mental_health = st.slider("Điểm sức khỏe tâm lý (1-10)", 1, 10, 5)
+            usage_hours = st.number_input("Số giờ sử dụng Internet mỗi ngày", min_value=0.0, max_value=24.0, value=5.0)
 
-        # --- Xếp loại mức độ ---
-        if prediction < 4:
-            level = "Thấp"
-        elif prediction < 7:
-            level = "Trung bình"
+        submit = st.form_submit_button("🔍 Dự đoán")
+
+    # --- Khi bấm nút dự đoán ---
+    if submit:
+        if GD_model is None or encoder is None:
+            st.error("Không thể dự đoán vì mô hình chưa được load đúng cách.")
         else:
-            level = "Cao"
-    
-        return render_template('index.html', result={
-            "score": round(prediction, 2),
-            "level": level
-    
-        })
-    
-    except Exception as e: 
-        return render_template('index.html', error=str(e))
+            try:
+                # --- Chuẩn bị dữ liệu ---
+                data = {
+                    "Gender": gender_map[gender],
+                    "Academic_Level": academic_map[academic],
+                    "Sleep_Hours_Per_Night": sleep_hours,
+                    "Relationship_Status": relationship_map[relationship],
+                    "Mental_Health_Score": mental_health,
+                    "Most_Used_Platform": platform_map[platform],
+                    "Avg_Daily_Usage_Hours": usage_hours
+                }
+
+                X = pd.DataFrame([data])
+                X_encoded = encoder.transform(X)
+                prediction = GD_model.predict(X_encoded)[0]
+
+                # --- Xếp loại mức độ ---
+                if prediction < 4:
+                    level = "Thấp"
+                elif prediction < 7:
+                    level = "Trung bình"
+                else:
+                    level = "Cao"
+
+                # --- Hiển thị kết quả ---
+                st.success(f"**Điểm dự đoán:** {round(prediction, 2)}")
+                st.info(f"**Mức độ nghiện Internet:** {level}")
+
+            except Exception as e:
+                st.error(f"Lỗi khi dự đoán: {e}")
+
+# --- Chạy ứng dụng ---
 if __name__ == '__main__':
     main()
