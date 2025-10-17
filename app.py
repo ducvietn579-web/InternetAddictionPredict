@@ -11,6 +11,16 @@ except Exception as e:
     st.error(f"❌ Không thể load mô hình: {e}")
     GD_model, encoder = None, None
 
+cols = [
+    "Gender",
+    "Academic_Level",
+    "Sleep_Hours_Per_Night",
+    "Relationship_Status",
+    "Mental_Health_Score",
+    "Most_Used_Platform",
+    "Avg_Daily_Usage_Hours"
+]
+
 # --- Mapping cho dữ liệu dạng chữ ---
 gender_map = {"Male": 0, "Female": 1}
 academic_map = {"Undergraduate": 0, "Graduated": 1, "Highschool": 2}
