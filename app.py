@@ -34,10 +34,10 @@ def predict():
             "Most_Used_Platform": platform_map[request.form["Most_Used_Platform"]],
             "Avg_Daily_Usage_Hours": float(request.form["Avg_Daily_Usage_Hours"])
         }
-
+   
         # --- Chuyển dữ liệu thành DataFrame cho mô hình ---
         X = pd.DataFrame([data])
-
+    
         # --- Dự đoán ---
         X_encoded = encoder.transform(X)
         
@@ -50,13 +50,14 @@ def predict():
             level = "Trung bình"
         else:
             level = "Cao"
-
+    
         return render_template('index.html', result={
             "score": round(prediction, 2),
             "level": level
+    
+        })
+    
     except Exception as e: 
     return render_template('iindex.html', error=str(e))
-        })
-
 if __name__ == '__main__':
     app.run(debug=False)
