@@ -15,7 +15,7 @@ academic_map = {"Undergraduate": 0, "Graduated": 1, "Highschool": 2}
 relationship_map = {"Single": 0, "In a relationship": 1, "Complicated": 3}
 platform_map = {"Youtube": 0, "Facebook": 1, "TikTok": 2, "Instagram": 3, "Other": 4}
 
-@app.route('/', method=['GET'])
+@app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
 
