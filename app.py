@@ -58,4 +58,6 @@ def predict():
         })
     
     except Exception as e: 
-    True)
+        return render_template('index.html', error=str(e))
+if __name__ == '__main__':
+    app.run(debug=False)
