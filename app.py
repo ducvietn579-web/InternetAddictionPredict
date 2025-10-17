@@ -1,12 +1,11 @@
 import streamlit as st
-import pickle
 import numpy as np
 import joblib
 # Tiêu đề trang
 st.title("Dự đoán Mức độ Nghiện Internet")
 
 # Tải mô hình đã huấn luyện
-model = joblib.load('model.pkl')
+model = joblib.load('GDmodel_enc.rpk')
 
 # Giao diện nhập liệu
 st.header("Nhập thông tin người dùng:")
