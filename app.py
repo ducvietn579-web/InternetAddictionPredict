@@ -6,7 +6,7 @@ import numpy as np
 st.title("Dự đoán Mức độ Nghiện Internet")
 
 # Tải mô hình đã huấn luyện
-model = pickle.load(open("GDmodel_enc.pkl"))
+model = pickle.load(open("GDmodel_enc.rpk"))
 
 # Giao diện nhập liệu
 st.header("Nhập thông tin người dùng:")
