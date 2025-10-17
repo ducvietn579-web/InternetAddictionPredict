@@ -54,7 +54,7 @@ def main():
                     "Avg_Daily_Usage_Hours": usage_hours
                 }
 
-                X = pd.DataFrame([data])
+                X = pd.DataFrame([data], columns = cols)
                 X_encoded = encoder.transform(X)
                 prediction = GD_model.predict(X_encoded)[0]
 
