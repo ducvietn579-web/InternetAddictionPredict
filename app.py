@@ -4,7 +4,6 @@ import numpy as np
 import pandas as pd
 import joblib
 
-app = Flask(__name__)
 
 # --- Load mô hình Machine Learning ---
 GD_model, encoder = joblib.load("GDmodel_enc.rpk")
