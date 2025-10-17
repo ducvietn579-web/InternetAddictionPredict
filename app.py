@@ -54,17 +54,9 @@ def main():
                     "Most_Used_Platform": platform_map[platform],
                     "Avg_Daily_Usage_Hours": usage_hours
                     }
-                    cols = [
-                    "Gender",
-                    "Academic_Level",
-                    "Sleep_Hours_Per_Night",
-                    "Relationship_Status",
-                    "Mental_Health_Score",
-                    "Most_Used_Platform",
-                    "Avg_Daily_Usage_Hours"
-                   ]
+        
 
-                X = pd.DataFrame([data], columns = cols)
+                X = pd.DataFrame([data])
                 X_encoded = encoder.transform(X)
                 prediction = GD_model.predict(X_encoded)[0]
 
