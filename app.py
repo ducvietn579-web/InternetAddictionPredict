@@ -58,5 +58,12 @@ def main():
                 st.error(f"Lỗi khi dự đoán: {e}")
                 st.write("Dữ liệu đầu vào:", data)
 
+X = encoder.transform(data)
+
+st.write("🧾 Dữ liệu gốc:", data)
+st.write("📊 Dữ liệu sau encoder:", X)
+st.write("🔤 Các cột trong encoder:", getattr(encoder, 'cols', 'Không có'))
+st.write("🧩 Encoder mapping:", getattr(encoder, 'category_mapping', 'Không có'))
+
 if __name__ == '__main__':
     main()
