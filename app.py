@@ -31,12 +31,14 @@ def main():
             academic = st.selectbox("Trình độ học vấn", ["Graduate", "Undergraduate", "High School"])
             relationship = st.selectbox("Tình trạng mối quan hệ", ["Single", "In a relationship", "Complicated"])
             platform = st.selectbox(
-                "Nền tảng sử dụng nhiều nhất",
-                [
-                    "Instagram", "LINE", "VK", "Facebook", "LinkedIn", "WhatsApp",
-                    "TikTok", "KakaoTalk", "WeChat", "Twitter", "YouTube", "Snapchat"
-                ]
-            )
+                                    "Nền tảng sử dụng nhiều nhất",
+                                    [
+                                        "Instagram", "LINE", "VKontakte", "Facebook", "LinkedIn",
+                                        "WhatsApp", "TikTok", "KakaoTalk", "WeChat", "Twitter",
+                                        "YouTube", "Snapchat"
+                                        ]
+                                    )
+
 
         with col2:
             sleep_hours = st.number_input("Số giờ ngủ mỗi đêm", min_value=0.0, max_value=12.0, value=7.0)
