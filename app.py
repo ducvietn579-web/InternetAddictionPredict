@@ -1,16 +1,13 @@
 import streamlit as st
-import numpy as np
 import pandas as pd
 import joblib
 
-# --- Load mô hình và encoder ---
 try:
     rf_model, encoder = joblib.load("rfmodel_enc.rpk")
 except Exception as e:
     st.error(f"Không thể load mô hình: {e}")
     rf_model, encoder = None, None
 
-# --- Giao diện chính ---
 def main():
     st.title("🧠 Internet Addiction Prediction")
     st.write("Nhập thông tin bên dưới để dự đoán mức độ nghiện Internet:")
@@ -19,9 +16,9 @@ def main():
         col1, col2 = st.columns(2)
         with col1:
             gender = st.selectbox("Giới tính", ["Male", "Female"])
-            academic = st.selectbox("Trình độ học vấn", ["Undergraduate", "Graduated", "Highschool"])
+            academic = st.selectbox("Trình độ học vấn", ["Graduate", "Undergraduate", "High School"])
             relationship = st.selectbox("Tình trạng mối quan hệ", ["Single", "In a relationship", "Complicated"])
-            platform = st.selectbox("Nền tảng sử dụng nhiều nhất", ["Youtube", "Facebook", "TikTok", "Instagram", "Other"])
+            platform = st.selectbox("Nền tảng sử dụng nhiều nhất", ["Tiktok", "Facebook", "Youtube", "Instagram", "Other"])
         with col2:
             sleep_hours = st.number_input("Số giờ ngủ mỗi đêm", min_value=0.0, max_value=12.0, value=7.0)
             mental_health = st.slider("Điểm sức khỏe tâm lý (1-10)", 1, 10, 5)
@@ -34,7 +31,6 @@ def main():
             st.error("Không thể dự đoán vì mô hình hoặc encoder chưa được load đúng cách.")
         else:
             try:
-                # Dữ liệu đầu vào gốc dạng chữ
                 data = pd.DataFrame([{
                     "Gender": gender,
                     "Academic_Level": academic,
@@ -45,13 +41,9 @@ def main():
                     "Avg_Daily_Usage_Hours": usage_hours
                 }])
 
-                # Dùng encoder đã lưu để transform
                 X = encoder.transform(data)
-
-                # Dự đoán
                 prediction = rf_model.predict(X)[0]
 
-                # Đánh giá mức độ
                 if prediction < 4:
                     level = "Thấp"
                 elif prediction < 7:
@@ -64,6 +56,7 @@ def main():
 
             except Exception as e:
                 st.error(f"Lỗi khi dự đoán: {e}")
-                st.write(encoder.categories_)
+                st.write("Dữ liệu đầu vào:", data)
+
 if __name__ == '__main__':
     main()
