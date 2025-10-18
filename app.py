@@ -2,19 +2,32 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-obj = joblib.load("rfmodel_enc.rpk")
+try:
+    obj = joblib.load("rfmodel_enc.rpk")
+    st.write("📦 Kiểu dữ liệu load được:", type(obj))
 
-print("📦 Kiểu dữ liệu load được:", type(obj))
+    # Nếu là tuple (model, encoder)
+    if isinstance(obj, tuple):
+        rf_model, encoder = obj
+        st.success("✅ File chứa tuple gồm (model, encoder)")
+        st.write("Kiểu model:", type(rf_model))
+        st.write("Kiểu encoder:", type(encoder))
 
-if isinstance(obj, tuple):
-    print("Tuple length:", len(obj))
-    for i, part in enumerate(obj):
-        print(f"  Phần {i+1}: {type(part)}")
-elif hasattr(obj, "predict"):
-    print("Đây là Pipeline hoặc model có thể predict trực tiếp.")
-    print("Các bước trong model:", getattr(obj, "steps", "Không có steps"))
-else:
-    print("Cấu trúc không xác định:", dir(obj))
+    # Nếu là Pipeline (model + encoder trong 1)
+    elif hasattr(obj, "predict"):
+        rf_model = obj
+        encoder = None
+        st.success("✅ Đây là Pipeline (có cả encoder và model bên trong)")
+        st.write("Các bước trong pipeline:", getattr(rf_model, "steps", "Không có steps"))
+
+    else:
+        rf_model, encoder = None, None
+        st.warning("⚠️ Cấu trúc file không xác định:")
+        st.write(dir(obj))
+
+except Exception as e:
+    st.error(f"Không thể load mô hình: {e}")
+    rf_model, encoder = None, None
 try:
     rf_model, encoder = joblib.load("rfmodel_enc.rpk")
 except Exception as e:
