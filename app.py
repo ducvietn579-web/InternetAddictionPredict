@@ -18,7 +18,7 @@ def main():
             gender = st.selectbox("Giới tính", ["Male", "Female"])
             academic = st.selectbox("Trình độ học vấn", ["Graduate", "Undergraduate", "High School"])
             relationship = st.selectbox("Tình trạng mối quan hệ", ["Single", "In a relationship", "Complicated"])
-           platform = st.selectbox(
+            platform = st.selectbox(
                                     "Nền tảng sử dụng nhiều nhất",["Instagram",
                                                                    "LINE",
                                                                    "VK",
@@ -37,7 +37,7 @@ def main():
             mental_health = st.slider("Điểm sức khỏe tâm lý (1-10)", 1, 10, 5)
             usage_hours = st.number_input("Số giờ sử dụng Internet mỗi ngày", min_value=0.0, max_value=24.0, value=5.0)
 
-        submit = st.form_submit_button("🔍 Dự đoán")
+            submit = st.form_submit_button("🔍 Dự đoán")
 
     if submit:
         if rf_model is None or encoder is None:
