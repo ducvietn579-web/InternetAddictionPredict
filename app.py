@@ -3,33 +3,18 @@ import pandas as pd
 import joblib
 
 try:
-    obj = joblib.load("rfmodel_enc.rpk")
-    st.write("📦 Kiểu dữ liệu load được:", type(obj))
+    loaded = joblib.load("rfmodel_enc.rpk")
+    st.write("📦 Kiểu dữ liệu load được:", type(loaded))
 
-    # Nếu là tuple (model, encoder)
-    if isinstance(obj, tuple):
-        rf_model, encoder = obj
-        st.success("✅ File chứa tuple gồm (model, encoder)")
+    # Nếu là tuple -> giải nén thành 2 phần
+    if isinstance(loaded, tuple) and len(loaded) == 2:
+        rf_model, encoder = loaded
+        st.success("✅ Đã load thành công tuple (rf_model, encoder)")
         st.write("Kiểu model:", type(rf_model))
         st.write("Kiểu encoder:", type(encoder))
-
-    # Nếu là Pipeline (model + encoder trong 1)
-    elif hasattr(obj, "predict"):
-        rf_model = obj
-        encoder = None
-        st.success("✅ Đây là Pipeline (có cả encoder và model bên trong)")
-        st.write("Các bước trong pipeline:", getattr(rf_model, "steps", "Không có steps"))
-
     else:
         rf_model, encoder = None, None
-        st.warning("⚠️ Cấu trúc file không xác định:")
-        st.write(dir(obj))
-
-except Exception as e:
-    st.error(f"Không thể load mô hình: {e}")
-    rf_model, encoder = None, None
-try:
-    rf_model, encoder = joblib.load("rfmodel_enc.rpk")
+        st.error("⚠️ File không phải tuple (rf_model, encoder)")
 except Exception as e:
     st.error(f"Không thể load mô hình: {e}")
     rf_model, encoder = None, None
@@ -65,45 +50,43 @@ def main():
 
             submit = st.form_submit_button("🔍 Dự đoán")
 
-    if submit:
-        if rf_model is None or encoder is None:
-            st.error("Không thể dự đoán vì mô hình hoặc encoder chưa được load đúng cách.")
-        else:
-            try:
-                data = pd.DataFrame([{
-                    "Gender": gender,
-                    "Academic_Level": academic,
-                    "Sleep_Hours_Per_Night": sleep_hours,
-                    "Relationship_Status": relationship,
-                    "Mental_Health_Score": mental_health,
-                    "Most_Used_Platform": platform,
-                    "Avg_Daily_Usage_Hours": usage_hours
-                }])
+   if submit:
+    if rf_model is None or encoder is None:
+        st.error("Không thể dự đoán vì mô hình hoặc encoder chưa được load đúng cách.")
+    else:
+        try:
+            data = pd.DataFrame([{
+                "Gender": gender,
+                "Academic_Level": academic,
+                "Sleep_Hours_Per_Night": sleep_hours,
+                "Relationship_Status": relationship,
+                "Mental_Health_Score": mental_health,
+                "Most_Used_Platform": platform,
+                "Avg_Daily_Usage_Hours": usage_hours
+            }])
 
-                # 🟦 DEBUG: Xem encoder đã học các danh mục gì
-                st.subheader("🧩 Các danh mục mà encoder đã học được:")
-                for mapping in encoder.category_mapping:
-                    st.write(mapping['col'], ":", list(mapping['mapping'].keys()))
+            st.write("🧾 Dữ liệu gốc:", data)
 
-                # 🟦 Tiếp tục encode và dự đoán
-                X = encoder.transform(data)
-                st.write("📊 Dữ liệu sau khi mã hóa:", X)
+            # Dùng encoder đã lưu để transform dữ liệu chữ
+            X = encoder.transform(data)
+            st.write("📊 Dữ liệu sau encoder:", X)
 
-                prediction = rf_model.predict(X)[0]
+            # Dự đoán
+            prediction = rf_model.predict(X)[0]
 
-                if prediction < 4:
-                    level = "Thấp"
-                elif prediction < 7:
-                    level = "Trung bình"
-                else:
-                    level = "Cao"
+            # Xếp loại
+            if prediction < 4:
+                level = "Thấp"
+            elif prediction < 7:
+                level = "Trung bình"
+            else:
+                level = "Cao"
 
-                st.success(f"**Điểm dự đoán:** {round(prediction, 2)}")
-                st.info(f"**Mức độ nghiện Internet:** {level}")
+            st.success(f"**Điểm dự đoán:** {round(prediction, 2)}")
+            st.info(f"**Mức độ nghiện Internet:** {level}")
 
-            except Exception as e:
-                st.error(f"Lỗi khi dự đoán: {e}")
-                st.write("Dữ liệu đầu vào:", data)
+        except Exception as e:
+            st.error(f"Lỗi khi dự đoán: {e}")
 
 if __name__ == '__main__':
     main()
