@@ -33,7 +33,7 @@ def main():
         if rf_model is None or encoder is None:
             st.error("Không thể dự đoán vì mô hình hoặc encoder chưa được load đúng cách.")
         else:
-        try:
+         try:
     # --- Dữ liệu gốc (chuỗi) ---
     data = pd.DataFrame([{
         "Gender": gender,
