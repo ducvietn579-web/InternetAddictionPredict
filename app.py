@@ -2,6 +2,19 @@ import streamlit as st
 import pandas as pd
 import joblib
 
+obj = joblib.load("rfmodel_enc.rpk")
+
+print("📦 Kiểu dữ liệu load được:", type(obj))
+
+if isinstance(obj, tuple):
+    print("Tuple length:", len(obj))
+    for i, part in enumerate(obj):
+        print(f"  Phần {i+1}: {type(part)}")
+elif hasattr(obj, "predict"):
+    print("Đây là Pipeline hoặc model có thể predict trực tiếp.")
+    print("Các bước trong model:", getattr(obj, "steps", "Không có steps"))
+else:
+    print("Cấu trúc không xác định:", dir(obj))
 try:
     rf_model, encoder = joblib.load("rfmodel_enc.rpk")
 except Exception as e:
