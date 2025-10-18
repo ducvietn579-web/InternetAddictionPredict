@@ -11,11 +11,6 @@ except Exception as e:
     st.error(f"Không thể load mô hình: {e}")
     rf_model, encoder = None, None
 
-# --- Mapping cho dữ liệu dạng chữ ---
-gender_map = {"Male": 0, "Female": 1}
-academic_map = {"Undergraduate": 0, "Graduated": 1, "Highschool": 2}
-relationship_map = {"Single": 0, "In a relationship": 1, "Complicated": 2}
-platform_map = {"Youtube": 0, "Facebook": 1, "TikTok": 2, "Instagram": 3, "Other": 4}
 
 # --- Giao diện chính ---
 def main():
