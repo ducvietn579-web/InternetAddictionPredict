@@ -6,10 +6,10 @@ import joblib
 
 # --- Load mô hình Machine Learning ---
 try:
-    GD_model, encoder = joblib.load("GDmodel_enc.rpk")
+rf_model, encoder = joblib.load("rfmodel_enc.rpk")
 except Exception as e:
-    st.error(f"❌ Không thể load mô hình: {e}")
-    GD_model, encoder = None, None
+    st.error(f" Không thể load mô hình: {e}")
+    rf_model, encoder = None, None
 
 
 # --- Mapping cho dữ liệu dạng chữ ---
@@ -40,7 +40,7 @@ def main():
 
     # --- Khi bấm nút dự đoán ---
     if submit:
-        if GD_model is None or encoder is None:
+        if rfrf_model is None or encoder is None:
             st.error("Không thể dự đoán vì mô hình chưa được load đúng cách.")
         else:
             try:
@@ -58,7 +58,7 @@ def main():
 
                 X = pd.DataFrame([data])
                 X_encoded = encoder.transform(X)
-                prediction = GD_model.predict(X_encoded)[0]
+                prediction = rf_model.predict(X_encoded)[0]
 
                 # --- Xếp loại mức độ ---
                 if prediction < 4:
