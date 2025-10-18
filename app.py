@@ -45,12 +45,13 @@ def main():
 
         submit = st.form_submit_button("🔍 Dự đoán")
 
-    # ⚠️ Căn lề đúng cấp độ này (thẳng hàng với 'with st.form')
+    # ⚙️ Xử lý khi nhấn nút dự đoán
     if submit:
         if rf_model is None or encoder is None:
             st.error("Không thể dự đoán vì mô hình hoặc encoder chưa được load đúng cách.")
         else:
             try:
+                # --- Chuẩn bị dữ liệu ---
                 data = pd.DataFrame([{
                     "Gender": gender,
                     "Academic_Level": academic,
@@ -63,12 +64,20 @@ def main():
 
                 st.write("🧾 Dữ liệu gốc:", data)
 
-                # Dùng encoder để mã hóa dữ liệu
+                # --- Encode dữ liệu ---
                 X = encoder.transform(data)
                 st.write("📊 Dữ liệu sau encoder:", X)
 
+                # --- Kiểm tra cột mô hình đã học ---
+                if hasattr(rf_model, "feature_names_in_"):
+                    st.write("🧩 Các cột mà mô hình đã học:", list(rf_model.feature_names_in_))
+                else:
+                    st.write("⚠️ Mô hình không lưu thông tin tên cột (feature_names_in_)")
+
+                # --- Dự đoán ---
                 prediction = rf_model.predict(X)[0]
 
+                # --- Hiển thị kết quả ---
                 if prediction < 4:
                     level = "Thấp"
                 elif prediction < 7:
@@ -81,7 +90,7 @@ def main():
 
             except Exception as e:
                 st.error(f"Lỗi khi dự đoán: {e}")
-                st.write("Dữ liệu đầu vào:", data)
+                st.write("📦 Dữ liệu đầu vào:", data)
 
 
 if __name__ == '__main__':
