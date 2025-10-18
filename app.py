@@ -6,7 +6,7 @@ import joblib
 
 # --- Load mô hình Machine Learning ---
 try:
-rf_model, encoder = joblib.load("rfmodel_enc.rpk")
+    rf_model, encoder = joblib.load("rfmodel_enc.rpk")
 except Exception as e:
     st.error(f" Không thể load mô hình: {e}")
     rf_model, encoder = None, None
@@ -40,7 +40,7 @@ def main():
 
     # --- Khi bấm nút dự đoán ---
     if submit:
-        if rfrf_model is None or encoder is None:
+        if rf_model is None or encoder is None:
             st.error("Không thể dự đoán vì mô hình chưa được load đúng cách.")
         else:
             try:
