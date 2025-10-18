@@ -8,9 +8,8 @@ import joblib
 try:
     rf_model, encoder = joblib.load("rfmodel_enc.rpk")
 except Exception as e:
-    st.error(f" Không thể load mô hình: {e}")
+    st.error(f"Không thể load mô hình: {e}")
     rf_model, encoder = None, None
-
 
 # --- Mapping cho dữ liệu dạng chữ ---
 gender_map = {"Male": 0, "Female": 1}
@@ -23,7 +22,6 @@ def main():
     st.title("🧠 Internet Addiction Prediction")
     st.write("Nhập thông tin bên dưới để dự đoán mức độ nghiện Internet:")
 
-    # --- Tạo form nhập dữ liệu ---
     with st.form("prediction_form"):
         col1, col2 = st.columns(2)
         with col1:
@@ -38,13 +36,11 @@ def main():
 
         submit = st.form_submit_button("🔍 Dự đoán")
 
-    # --- Khi bấm nút dự đoán ---
     if submit:
-        if rf_model is None or encoder is None:
+        if rf_model is None:
             st.error("Không thể dự đoán vì mô hình chưa được load đúng cách.")
         else:
             try:
-                # --- Chuẩn bị dữ liệu ---
                 data = {
                     "Gender": gender_map[gender],
                     "Academic_Level": academic_map[academic],
@@ -53,13 +49,13 @@ def main():
                     "Mental_Health_Score": mental_health,
                     "Most_Used_Platform": platform_map[platform],
                     "Avg_Daily_Usage_Hours": usage_hours
-                    }
-        
+                }
 
                 X = pd.DataFrame([data])
-                prediction = rf_model.predict(X_encoded)[0]
 
-                # --- Xếp loại mức độ ---
+                # Không cần encoder nữa
+                prediction = rf_model.predict(X)[0]
+
                 if prediction < 4:
                     level = "Thấp"
                 elif prediction < 7:
@@ -67,13 +63,12 @@ def main():
                 else:
                     level = "Cao"
 
-                # --- Hiển thị kết quả ---
                 st.success(f"**Điểm dự đoán:** {round(prediction, 2)}")
                 st.info(f"**Mức độ nghiện Internet:** {level}")
 
             except Exception as e:
                 st.error(f"Lỗi khi dự đoán: {e}")
+                st.write("📦 Dữ liệu đầu vào:", X)
 
-# --- Chạy ứng dụng ---
 if __name__ == '__main__':
     main()
