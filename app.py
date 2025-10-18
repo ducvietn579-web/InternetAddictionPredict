@@ -33,20 +33,20 @@ def main():
         if rf_model is None or encoder is None:
             st.error("Không thể dự đoán vì mô hình hoặc encoder chưa được load đúng cách.")
         else:
-        try:
+            try:
     # --- Dữ liệu gốc (chuỗi) ---
-           data = pd.DataFrame([{
-            "Gender": gender,
-            "Academic_Level": academic,
-            "Sleep_Hours_Per_Night": sleep_hours,
-            "Relationship_Status": relationship,
-            "Mental_Health_Score": mental_health,
-            "Most_Used_Platform": platform,
-            "Avg_Daily_Usage_Hours": usage_hours
+               data = pd.DataFrame([{
+                "Gender": gender,
+                "Academic_Level": academic,
+                "Sleep_Hours_Per_Night": sleep_hours,
+                "Relationship_Status": relationship,
+                "Mental_Health_Score": mental_health,
+                "Most_Used_Platform": platform,
+                "Avg_Daily_Usage_Hours": usage_hours
     }])
 
-            st.write("🔎 Dữ liệu gốc (input):")
-            st.write(data)
+                st.write("🔎 Dữ liệu gốc (input):")
+                st.write(data)
 
     # --- Kiểm tra encoder tồn tại và kiểu ---
             st.write("🔎 Kiểu encoder:", type(encoder))
