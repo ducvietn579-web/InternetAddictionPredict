@@ -7,10 +7,6 @@ try:
 except Exception as e:
     st.error(f"Không thể load mô hình: {e}")
     rf_model, encoder = None, None
-    st.write("🧾 Dữ liệu gốc:", data)
-    st.write("📊 Dữ liệu sau encoder:", X)
-    st.write("🔤 Các cột trong encoder:", getattr(encoder, 'cols', 'Không có'))
-    st.write("🧩 Encoder mapping:", getattr(encoder, 'category_mapping', 'Không có'))
 def main():
     st.title("🧠 Internet Addiction Prediction")
     st.write("Nhập thông tin bên dưới để dự đoán mức độ nghiện Internet:")
@@ -43,8 +39,12 @@ def main():
                     "Most_Used_Platform": platform,
                     "Avg_Daily_Usage_Hours": usage_hours
                 }])
+                st.write("🧾 Dữ liệu gốc:", data)
+                st.write("🔤 Các cột trong encoder:", getattr(encoder, 'cols', 'Không có'))
+                st.write("🧩 Encoder mapping:", getattr(encoder, 'category_mapping', 'Không có'))
 
                 X = encoder.transform(data)
+                st.write("📊 Dữ liệu sau encoder:", X)
                 prediction = rf_model.predict(X)[0]
 
                 if prediction < 4:
