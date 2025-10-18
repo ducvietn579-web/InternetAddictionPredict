@@ -57,7 +57,6 @@ def main():
         
 
                 X = pd.DataFrame([data])
-                X_encoded = encoder.transform(X)
                 prediction = rf_model.predict(X_encoded)[0]
 
                 # --- Xếp loại mức độ ---
