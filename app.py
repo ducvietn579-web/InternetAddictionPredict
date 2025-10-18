@@ -18,7 +18,7 @@ def main():
             gender = st.selectbox("Giới tính", ["Male", "Female"])
             academic = st.selectbox("Trình độ học vấn", ["Graduate", "Undergraduate", "High School"])
             relationship = st.selectbox("Tình trạng mối quan hệ", ["Single", "In a relationship", "Complicated"])
-            platform = st.selectbox("Nền tảng sử dụng nhiều nhất", ["Tiktok", "Facebook", "Youtube", "Instagram", "Other"])
+            platform = st.selectbox("Nền tảng sử dụng nhiều nhất", ["Most_Used_Platform_Instagram", "Most_Used_Platform_LINE", "Most_Used_Platform_VKontakte", "Most_Used_Platform_Facebook", "Most_Used_Platform_LinkedIn", "Most_Used_Platform_WhatsApp", "Most_Used_Platform_TikTok", "Most_Used_Platform_KakaoTalk", "Most_Used_Platform_WeChat", "Most_Used_Platform_Twitter", "Most_Used_Platform_YouTube", "Most_Used_Platform_Snapchat])
         with col2:
             sleep_hours = st.number_input("Số giờ ngủ mỗi đêm", min_value=0.0, max_value=12.0, value=7.0)
             mental_health = st.slider("Điểm sức khỏe tâm lý (1-10)", 1, 10, 5)
