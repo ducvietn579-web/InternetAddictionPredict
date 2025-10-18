@@ -49,11 +49,11 @@ def main():
     if submit:
         if rf_model is None or encoder is None:
             st.error("Không thể dự đoán vì mô hình hoặc encoder chưa được load đúng cách.")
-        else:
-            if hasattr(rf_model, "feature_names_in_"):
-                st.write("🧩 Các đặc trưng mô hình đã học:", list(rf_model.feature_names_in_))
-        else:
-                st.write("⚠️ Mô hình không lưu thông tin tên cột.")
+    else:
+        if hasattr(rf_model, "feature_names_in_"):
+            st.write("🧩 Các đặc trưng mô hình đã học:", list(rf_model.feature_names_in_))
+     else:
+            st.write("⚠️ Mô hình không lưu thông tin tên cột.")
             try:
                 data = pd.DataFrame([{
                     "Gender": gender,
