@@ -74,6 +74,9 @@ def main():
 
             except Exception as e:
                 st.error(f"Lỗi khi dự đoán: {e}")
+                st.write("📦 Dữ liệu trước encode:", X)
+                st.write("📦 Dữ liệu sau encode:", X_encoded)
+
 
 # --- Chạy ứng dụng ---
 if __name__ == '__main__':
