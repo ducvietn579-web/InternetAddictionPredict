@@ -3,6 +3,9 @@ import numpy as np
 import pandas as pd
 import joblib
 
+
+st.write(encoder.categories_)
+
 # --- Load mô hình và encoder ---
 try:
     rf_model, encoder = joblib.load("rfmodel_enc.rpk")
