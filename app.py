@@ -53,13 +53,13 @@ def main():
             st.write("🧾 Dữ liệu đầu vào:", data)
 
             X = encoder.transform(data)
-           st.subheader("🧩 Kiểm tra dữ liệu sau khi mã hóa (Encoder)")
-           st.write("📊 Số cột sau khi mã hóa:", X.shape[1])
-           st.write("📋 Tên các cột sau khi mã hóa:", list(X.columns))
-           st.write("🧾 Dữ liệu sau khi encoder:")
-           st.dataframe(X)
-           st.write("🔢 Vector đầu vào dạng mảng:")
-           st.write(X.values.tolist())
+            st.subheader("🧩 Kiểm tra dữ liệu sau khi mã hóa (Encoder)")
+            st.write("📊 Số cột sau khi mã hóa:", X.shape[1])
+            st.write("📋 Tên các cột sau khi mã hóa:", list(X.columns))
+            st.write("🧾 Dữ liệu sau khi encoder:")
+            st.dataframe(X)
+            st.write("🔢 Vector đầu vào dạng mảng:")
+            st.write(X.values.tolist())
 
             prediction = rf_model.predict(X)[0]
             level = "Thấp" if prediction < 4 else ("Trung bình" if prediction < 7 else "Cao")
