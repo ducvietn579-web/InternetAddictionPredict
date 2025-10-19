@@ -4,11 +4,11 @@ import joblib
 
 # --- Load mô hình ---
 try:
-    loaded = joblib.load("rfmodel.rpk")
+    loaded = joblib.load("rfmodel.pkl")
     if isinstance(loaded, tuple) and len(loaded) == 2:
         rf_model, encoder = loaded
         st.success("✅ Đã load thành công mô hình Random Forest và encoder")
-    else:
+    else:    
         st.error("⚠️ File không phải tuple (rf_model, encoder)")
         rf_model, encoder = None, None
 except Exception as e:
