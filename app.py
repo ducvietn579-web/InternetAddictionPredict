@@ -7,9 +7,9 @@ try:
     loaded = joblib.load("rfmodel.pkl")
     if isinstance(loaded, tuple) and len(loaded) == 2:
         rf_model, encoder = loaded
-        st.success("✅ Đã load thành công mô hình Random Forest và encoder")
+        st.success("Đã load thành công mô hình Random Forest và encoder")
     else:    
-        st.error("⚠️ File không phải tuple (rf_model, encoder)")
+        st.error(" File không phải tuple (rf_model, encoder)")
         rf_model, encoder = None, None
 except Exception as e:
     st.error(f"Không thể load mô hình: {e}")
@@ -17,7 +17,7 @@ except Exception as e:
 
 
 def main():
-    st.title("🧠 Internet Addiction Prediction")
+    st.title("Internet Addiction Prediction")
     st.write("Nhập thông tin bên dưới để dự đoán mức độ nghiện Internet:")
 
     with st.form("prediction_form"):
@@ -53,12 +53,12 @@ def main():
             st.write("🧾 Dữ liệu đầu vào:", data)
 
             X = encoder.transform(data)
-            st.subheader("🧩 Kiểm tra dữ liệu sau khi mã hóa (Encoder)")
-            st.write("📊 Số cột sau khi mã hóa:", X.shape[1])
-            st.write("📋 Tên các cột sau khi mã hóa:", list(X.columns))
-            st.write("🧾 Dữ liệu sau khi encoder:")
+            st.subheader("Kiểm tra dữ liệu sau khi mã hóa (Encoder)")
+            st.write(" Số cột sau khi mã hóa:", X.shape[1])
+            st.write("Tên các cột sau khi mã hóa:", list(X.columns))
+            st.write("Dữ liệu sau khi encoder:")
             st.dataframe(X)
-            st.write("🔢 Vector đầu vào dạng mảng:")
+            st.write(" Vector đầu vào dạng mảng:")
             st.write(X.values.tolist())
 
             prediction = rf_model.predict(X)[0]    
