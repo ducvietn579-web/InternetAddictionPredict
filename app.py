@@ -32,7 +32,7 @@ def main():
             sleep_hours = st.number_input("Số giờ ngủ mỗi đêm", 0.0, 12.0, 7.0)
             mental_health = st.slider("Điểm sức khỏe tâm lý (1–10)", 1, 10, 5)
             usage_hours = st.number_input("Số giờ sử dụng Internet mỗi ngày", 0.0, 24.0, 5.0)
-
+            conflict_over_internet = st.number_input("Xung đột khi sử dụng Internet", 0.0, 3.6, 0.0)
         submit = st.form_submit_button("🔍 Dự đoán")
 
     if submit:
@@ -48,7 +48,8 @@ def main():
                 "Relationship_Status": relationship,
                 "Mental_Health_Score": mental_health,
                 "Most_Used_Platform": platform,
-                "Avg_Daily_Usage_Hours": usage_hours
+                "Avg_Daily_Usage_Hours": usage_hours,
+                "Conflicts_Over_Social_Media": conflict_over_internet
             }])
             st.write("🧾 Dữ liệu đầu vào:", data)
 
