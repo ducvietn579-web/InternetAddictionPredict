@@ -55,7 +55,7 @@ def main():
             prediction = rf_model.predict(X)[0]    
             level = "Thấp" if prediction < 4 else ("Trung bình" if prediction < 7 else "Cao")
 
-            st.success(f"**Điểm dự đoán:** round({prediction}, 6)")
+            st.success(f"**Điểm dự đoán:** {round(prediction, 6)}")
             st.info(f"**Mức độ nghiện Internet:** {level}")
 
         except Exception as e:
