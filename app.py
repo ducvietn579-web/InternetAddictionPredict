@@ -6,7 +6,7 @@ import joblib
 try:
     loaded = joblib.load("GDmodel.pkl")
     if isinstance(loaded, tuple) and len(loaded) == 2:
-        rf_model, encoder = loaded
+        GDGD_model, encoder = loaded
         st.success("Đã load thành công mô hình GradientBoosting và encoder")
     else:    
         st.error(" File không phải tuple (GD_model, encoder)")
@@ -52,7 +52,7 @@ def main():
                 "Conflicts_Over_Social_Media": conflict_over_internet
             }])
             X = encoder.transform(data)
-            prediction = GDmodel.predict(X)[0]    
+            prediction = GD_model.predict(X)[0]    
             level = "Thấp" if prediction < 4 else ("Trung bình" if prediction < 7 else "Cao")
 
             st.success(f"**Điểm dự đoán:** {round(prediction, 6)}")
