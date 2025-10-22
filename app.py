@@ -4,7 +4,7 @@ import joblib
 
 # --- Load mô hình ---
 try:
-    loaded = joblib.load("rfmodel (4).pkl")
+    loaded = joblib.load("GDmodel_enc.rrpk")
     if isinstance(loaded, tuple) and len(loaded) == 2:
         rf_model, encoder = loaded
         st.success("Đã load thành công mô hình Random Forest và encoder")
