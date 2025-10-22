@@ -16,7 +16,7 @@ except Exception as e:
 
 
 def main():
-    st.title("Internet Addiction Prediction (Random Forest)")
+    st.title("Internet Addiction Prediction")
     st.write("Nhập thông tin bên dưới để dự đoán **mức độ nghiện Internet**:")
 
     with st.form("prediction_form"):
