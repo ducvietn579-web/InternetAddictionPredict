@@ -17,7 +17,7 @@ except Exception as e:
 
 
 def main():
-    st.title("🌐 Internet Addiction Prediction (Random Forest)")
+    st.title("Internet Addiction Prediction (Random Forest)")
     st.write("Nhập thông tin bên dưới để dự đoán **mức độ nghiện Internet**:")
 
     with st.form("prediction_form"):
@@ -63,7 +63,7 @@ def main():
                 prediction = rf_model.predict(X)[0]
                 level = "Thấp" if prediction < 4 else ("Trung bình" if prediction < 7 else "Cao")
 
-                st.success(f"**Điểm dự đoán:** {round(prediction, 2)}")
+                st.success(f"**Điểm dự đoán:** {round(prediction, 6)}")
                 st.info(f"**Mức độ nghiện Internet:** {level}")
 
             except Exception as e:
