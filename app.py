@@ -51,8 +51,6 @@ def main():
                 "Avg_Daily_Usage_Hours": usage_hours,
                 "Conflicts_Over_Social_Media": conflict_over_internet
             }])
-            st.write("🧾 Dữ liệu đầu vào:", data)
-
             X = encoder.transform(data)
             prediction = rf_model.predict(X)[0]    
             level = "Thấp" if prediction < 4 else ("Trung bình" if prediction < 7 else "Cao")
