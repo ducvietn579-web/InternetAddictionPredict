@@ -6,7 +6,7 @@ try:
     loaded = joblib.load("rfmodel (4).pkl") 
     if isinstance(loaded, tuple) and len(loaded) == 2:
         rf_model, encoder = loaded
-        st.success("Đã load thành công mô hình Random Forest và encoder")
+        st.success("Đã load thành công mô hình và encoder")
     else:
         st.error("File không phải dạng tuple (rf_model, encoder)")
         rf_model, encoder = None, None
