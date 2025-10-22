@@ -32,7 +32,7 @@ def main():
             sleep_hours = st.number_input("Số giờ ngủ mỗi đêm", 0.0, 12.0, 7.0)
             mental_health = st.slider("Điểm sức khỏe tâm lý (1–10)", 1, 10, 5)
             usage_hours = st.number_input("Số giờ sử dụng Internet mỗi ngày", 0.0, 24.0, 5.0)
-rf_model is None or encoder is None:
+if rf_model is None or encoder is None:
             st.error("Không thể dự đoán vì mô hình chưa được load đúng cách.")
             return
 
