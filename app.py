@@ -2,9 +2,8 @@ import streamlit as st
 import pandas as pd
 import joblib
 
-# --- Load mô hình ---
 try:
-    loaded = joblib.load("rfmodel (4).pkl")  # 🔹 đổi tên file sang rf_model.pkl
+    loaded = joblib.load("rfmodel (4).pkl") 
     if isinstance(loaded, tuple) and len(loaded) == 2:
         rf_model, encoder = loaded
         st.success("Đã load thành công mô hình Random Forest và encoder")
