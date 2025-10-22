@@ -4,12 +4,12 @@ import joblib
 
 # --- Load mô hình ---
 try:
-    loaded = joblib.load("DTmodel.pkl")
+    loaded = joblib.load("GDmodel.pkl")
     if isinstance(loaded, tuple) and len(loaded) == 2:
         rf_model, encoder = loaded
-        st.success("Đã load thành công mô hình Random Forest và encoder")
+        st.success("Đã load thành công mô hình GradientBoosting và encoder")
     else:    
-        st.error(" File không phải tuple (rf_model, encoder)")
+        st.error(" File không phải tuple (GD_model, encoder)")
         rf_model, encoder = None, None
 except Exception as e:
     st.error(f"Không thể load mô hình: {e}")
@@ -52,7 +52,7 @@ def main():
                 "Conflicts_Over_Social_Media": conflict_over_internet
             }])
             X = encoder.transform(data)
-            prediction = rf_model.predict(X)[0]    
+            prediction = GD_model.predict(X)[0]    
             level = "Thấp" if prediction < 4 else ("Trung bình" if prediction < 7 else "Cao")
 
             st.success(f"**Điểm dự đoán:** {round(prediction, 6)}")
