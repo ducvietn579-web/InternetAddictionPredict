@@ -52,7 +52,7 @@ def main():
                 "Conflicts_Over_Social_Media": conflict_over_internet
             }])
             X = encoder.transform(data)
-            prediction = GD_model.predict(X)[0]    
+            prediction = GDmodel.predict(X)[0]    
             level = "Thấp" if prediction < 4 else ("Trung bình" if prediction < 7 else "Cao")
 
             st.success(f"**Điểm dự đoán:** {round(prediction, 6)}")
